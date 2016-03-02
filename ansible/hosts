@@ -1,0 +1,13 @@
+[webservers]
+web01
+
+[dbservers]
+db01
+
+[webfarm:children]
+webservers
+dbservers
+
+[webfarm:vars]
+ansible_user=vagrant
+ansible_ssh_pass=vagrant
