@@ -1,5 +1,6 @@
 ---
-- hosts: webservers
+- name: Build Apache Web Servers
+  hosts: webservers
   become: yes
 
   tasks:
@@ -15,7 +16,8 @@
   - name: ensure the apache2 web service is started
     service: name=apache2 state=started
 
-- hosts: dbservers
+- name: Build MySQL Database Servers
+  hosts: dbservers
   become: yes
 
   tasks:
@@ -30,7 +32,7 @@
       dest=/etc/hosts
 
   - name: create a new user called sysadm
-    user: 
+    user:
       name=sysadm
       password=password
 
