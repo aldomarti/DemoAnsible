@@ -1,13 +1,13 @@
 [webservers]
-web01
+ALDLINUBU01
 
 [dbservers]
-db01
+ALDLINUBU02
 
 [webfarm:children]
 webservers
 dbservers
 
 [webfarm:vars]
-ansible_user=vagrant
-ansible_ssh_pass=vagrant
+ansible_user=amartinez
+ansible_ssh_pass=Aldomartinezalarc0n
