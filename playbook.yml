@@ -22,7 +22,7 @@
 
   tasks:
   - name: ensure MySQL is installed
-    apt: name=mysql-server state=installed
+    apt:  name=mysql-server state=latest
 
   - name: copy the latest hostfile
     copy: src=/etc/hosts dest=/etc/hosts
