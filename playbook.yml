@@ -21,8 +21,8 @@
   become: yes
 
   tasks:
-  - name: ensure MySQL is installed
-    apt:  name=mysql-server state=latest
+  - name: ensure apache is installed
+    apt: name=apache2 update_cache=yes state=latest
 
   - name: copy the latest hostfile
     copy: src=/etc/hosts dest=/etc/hosts
@@ -30,5 +30,5 @@
   - name: create a new user called sysadm
     user: name=sysadm password=password
 
-  - name: ensure the MySQL service is started
-    service: name=mysql state=started
+  - name: ensure the apache2 web service is started
+    service: name=apache2 state=started
