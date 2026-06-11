@@ -2,7 +2,7 @@
 
 name: DEPLOY - PRD
 
-run-name: "PRD-${{ github.event.workflow_run.run_number }}"
+run-name: "PRD-1.0.${{ github.event.workflow_run.run_number }}"
 
 # Controls when the workflow will run
 on:
@@ -27,7 +27,7 @@ jobs:
         with:
           name: version-artifact
           github-token: ${{ secrets.GITHUB_TOKEN }}
-          run-id: 1.0.${{ github.event.workflow_run.id }}
+          run-id: ${{ github.event.workflow_run.id }}
 
       # Lee la versión desde el archivo
       - name: Read version
