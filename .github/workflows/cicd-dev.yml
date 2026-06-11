@@ -1,7 +1,8 @@
 # This is a basic workflow to help you get started with Actions
 
-name: CI
-run-name: ${{ github.run_number }}
+name: BUILD - DEV
+
+run-name: "CI-1.0.${{ github.run_number }}"
 
 # Controls when the workflow will run
 on:
@@ -14,6 +15,8 @@ on:
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
+env:
+    version: 1.0.${{ github.run_number }}
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   # This workflow contains a single job called "build"
@@ -35,3 +38,15 @@ jobs:
         run: |
           echo Add other actions to build,
           echo test, and deploy your project.
+
+      # Comprime todos los archivos del repositorio
+      - name: Compress repository
+        run: zip -r repository-${{ env.version }}.zip . -x "*.git*" ".github/workflows/*"
+
+      # Sube el archivo comprimido como artefacto
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: repository-archive
+          path: repository-${{ env.version }}.zip
+          retention-days: 30

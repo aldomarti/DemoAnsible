@@ -1,0 +1,46 @@
+# This is a basic workflow to help you get started with Actions
+
+name: DEPLOY - UAT
+
+run-name: "UAT-${{ github.event.workflow_run.id }}"
+
+# Controls when the workflow will run
+on:
+  # Se gatilla cuando el workflow BUILD - DEV se completa
+  workflow_run:
+    workflows: ["BUILD - DEV"]
+    types:
+      - completed
+
+env:
+    version: 1.0.${{ github.event.workflow_run.run_number }}
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This workflow contains a single job called "build"
+  build:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      # Descarga el artefacto del workflow BUILD - DEV
+      - name: Download artifact from BUILD - DEV
+        uses: actions/download-artifact@v4
+        with:
+          name: repository-archive
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          run-id: ${{ github.event.workflow_run.id }}
+
+      # Extrae el archivo zip
+      - name: Extract repository archive
+        run: unzip -q repository-${{ env.version }}.zip -d .
+
+      # Runs a single command using the runners shell
+      - name: Run a one-line script
+        run: echo Deploying version ${{ env.version }} to UAT
+
+      # Runs a set of commands using the runners shell
+      - name: Run deployment script
+        run: |
+          echo Starting UAT deployment,
+          echo deploying version ${{ env.version }} to UAT environment.
