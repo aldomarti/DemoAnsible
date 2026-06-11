@@ -2,7 +2,7 @@
 
 name: DEPLOY - PRD
 
-run-name: "PRD-${{ github.event.workflow_run.id }}"
+run-name: "PRD-${{ github.event.workflow_run.run_number }}"
 
 # Controls when the workflow will run
 on:
@@ -12,8 +12,6 @@ on:
     types:
       - completed
 
-env:
-    version: 1.0.${{ github.event.workflow_run.run_number }}
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   # This workflow contains a single job called "build"
@@ -23,6 +21,20 @@ jobs:
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
+      # Descarga el archivo de versión del workflow DEPLOY - UAT
+      - name: Download version artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: version-artifact
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          run-id: ${{ github.event.workflow_run.id }}
+
+      # Lee la versión desde el archivo
+      - name: Read version
+        run: |
+          VERSION=$(cat version.txt)
+          echo "VERSION=$VERSION" >> $GITHUB_ENV
+
       # Descarga el artefacto del workflow DEPLOY - UAT
       - name: Download artifact from DEPLOY - UAT
         uses: actions/download-artifact@v4
@@ -33,16 +45,14 @@ jobs:
 
       # Extrae el archivo zip
       - name: Extract repository archive
-        run: unzip -q repository-${{ env.version }}.zip -d .
+        run: unzip -q repository-*.zip -d .
 
       # Runs a single command using the runners shell
       - name: Run a one-line script
-        run: echo Deploying version ${{ env.version }} to PRD
+        run: echo Deploying version ${{ env.VERSION }} to PRD
 
       # Runs a set of commands using the runners shell
       - name: Run deployment script
         run: |
           echo Starting PRD deployment,
-          echo deploying version ${{ env.version }} to Production environment.
-          path: repository-${{ env.version }}.zip
-          retention-days: 30
+          echo deploying version ${{ env.VERSION }} to Production environment.
