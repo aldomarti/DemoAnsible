@@ -2,7 +2,7 @@
 
 name: DEPLOY - PRD
 
-run-name: "PRD-${{ vars.RUNNAME }}"
+run-name: "PRD-${{ vars.RUNNAME }}${{ github.event.workflow_run.run_number }}"
 
 # Controls when the workflow will run
 on:
