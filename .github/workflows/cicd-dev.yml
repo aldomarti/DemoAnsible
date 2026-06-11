@@ -2,7 +2,7 @@
 
 name: BUILD - DEV
 
-run-name: "CI-1.0.${{ github.run_number }}"
+run-name: "CI-${{ vars.RUNNAME }}"
 
 # Controls when the workflow will run
 on:

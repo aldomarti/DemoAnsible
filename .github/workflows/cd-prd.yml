@@ -2,7 +2,7 @@
 
 name: DEPLOY - PRD
 
-run-name: "PRD-1.0.${{ github.event.workflow_run.run_number }}"
+run-name: "PRD-${{ vars.RUNNAME }}"
 
 # Controls when the workflow will run
 on:
@@ -25,7 +25,7 @@ jobs:
       - name: Download version artifact
         uses: actions/download-artifact@v4
         with:
-          name: version-artifact
+          name: repository-archive
           github-token: ${{ secrets.GITHUB_TOKEN }}
           run-id: ${{ github.event.workflow_run.id }}
 

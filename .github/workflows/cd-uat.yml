@@ -2,7 +2,7 @@
 
 name: DEPLOY - UAT
 
-run-name: "UAT-1.0.${{ github.event.workflow_run.run_number }}"
+run-name: "UAT-${{ vars.RUNNAME }}"
 
 # Controls when the workflow will run
 on:
