@@ -27,7 +27,7 @@ jobs:
         with:
           name: version-artifact
           github-token: ${{ secrets.GITHUB_TOKEN }}
-          run-id: ${{ github.event.workflow_run.id }}
+          run-id: 1.0.${{ github.event.workflow_run.id }}
 
       # Lee la versión desde el archivo
       - name: Read version

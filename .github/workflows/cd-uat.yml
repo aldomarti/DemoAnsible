@@ -27,7 +27,8 @@ jobs:
         with:
           name: repository-archive
           github-token: ${{ secrets.GITHUB_TOKEN }}
-          run-id: ${{ github.event.workflow_run.id }}
+          run-id: 1.0.${{ github.event.workflow_run.id }}
+          #run-id: ${{ github.event.workflow_run.id }}
 
       # Extrae el nombre del archivo zip para obtener la versión
       - name: Extract version from artifact
