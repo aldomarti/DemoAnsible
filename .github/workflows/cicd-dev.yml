@@ -29,27 +29,17 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v4
 
-      # Runs a single command using the runners shell
-      - name: Run a one-line script
-        run: echo Hello, world!
+      # # Comprime todos los archivos del repositorio
+      # - name: Compress repository
+      #   run: zip -r repository-${{ env.version }}.zip . -x "*.git*" ".github/workflows/*"
 
-      # Runs a set of commands using the runners shell
-      - name: Run a multi-line script
-        run: |
-          echo Add other actions to build,
-          echo test, and deploy your project.
-
-      # Comprime todos los archivos del repositorio
-      - name: Compress repository
-        run: zip -r repository-${{ env.version }}.zip . -x "*.git*" ".github/workflows/*"
-
-      # Sube el archivo comprimido como artefacto
-      - name: Upload artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: repository-archive
-          path: repository-${{ env.version }}.zip
-          retention-days: 30
+      # # Sube el archivo comprimido como artefacto
+      # - name: Upload artifact
+      #   uses: actions/upload-artifact@v4
+      #   with:
+      #     name: repository-archive
+      #     path: repository-${{ env.version }}.zip
+      #     retention-days: 30
 
       # Sube el archivo de versión como artefacto
       - name: Save version to artifact

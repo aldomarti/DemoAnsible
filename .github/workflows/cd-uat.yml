@@ -21,24 +21,23 @@ jobs:
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      # Descarga el artefacto del workflow BUILD - DEV
-      - name: Download artifact from BUILD - DEV
-        uses: actions/download-artifact@v4
-        with:
-          name: repository-archive
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          run-id: ${{ github.event.workflow_run.id }}
+      # # Descarga el artefacto del workflow BUILD - DEV
+      # - name: Download artifact from BUILD - DEV
+      #   uses: actions/download-artifact@v4
+      #   with:
+      #     name: repository-archive
+      #     github-token: ${{ secrets.GITHUB_TOKEN }}
+      #     run-id: ${{ github.event.workflow_run.id }}
 
-      # Extrae el nombre del archivo zip para obtener la versión
-      - name: Extract version from artifact
+      # Lee la versión desde el archivo
+      - name: Read version
         run: |
-          VERSION=$(ls repository-*.zip | sed 's/repository-//;s/.zip//')
+          VERSION=$(cat version.txt)
           echo "VERSION=$VERSION" >> $GITHUB_ENV
-          echo "$VERSION" > version.txt
 
-      # Extrae el archivo zip
-      - name: Extract repository archive
-        run: unzip -q repository-${{ env.VERSION }}.zip -d .
+      # # Extrae el archivo zip
+      # - name: Extract repository archive
+      #   run: unzip -q repository-${{ env.VERSION }}.zip -d .
 
       # Sube el archivo de versión como artefacto
       - name: Upload version artifact
@@ -48,13 +47,13 @@ jobs:
           path: version.txt
           retention-days: 30
 
-      # Re-sube el archivo repository-archive para el siguiente pipeline
-      - name: Re-upload repository archive
-        uses: actions/upload-artifact@v4
-        with:
-          name: repository-archive
-          path: repository-${{ env.VERSION }}.zip
-          retention-days: 30
+      # # Re-sube el archivo repository-archive para el siguiente pipeline
+      # - name: Re-upload repository archive
+      #   uses: actions/upload-artifact@v4
+      #   with:
+      #     name: repository-archive
+      #     path: repository-${{ env.VERSION }}.zip
+      #     retention-days: 30
 
       # Runs a single command using the runners shell
       - name: Run a one-line script

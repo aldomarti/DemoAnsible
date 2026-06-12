@@ -21,13 +21,13 @@ jobs:
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      # Descarga el archivo de versión del workflow DEPLOY - UAT
-      - name: Download version artifact from DEPLOY - UAT
-        uses: actions/download-artifact@v4
-        with:
-          name: version-artifact
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          run-id: ${{ github.event.workflow_run.id }}
+      # # Descarga el archivo de versión del workflow DEPLOY - UAT
+      # - name: Download version artifact from DEPLOY - UAT
+      #   uses: actions/download-artifact@v4
+      #   with:
+      #     name: version-artifact
+      #     github-token: ${{ secrets.GITHUB_TOKEN }}
+      #     run-id: ${{ github.event.workflow_run.id }}
 
       # Lee la versión desde el archivo
       - name: Read version
@@ -35,17 +35,17 @@ jobs:
           VERSION=$(cat version.txt)
           echo "VERSION=$VERSION" >> $GITHUB_ENV
 
-      # Descarga el artefacto del repositorio del workflow DEPLOY - UAT
-      - name: Download repository archive from DEPLOY - UAT
-        uses: actions/download-artifact@v4
-        with:
-          name: repository-archive
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          run-id: ${{ github.event.workflow_run.id }}
+      # # Descarga el artefacto del repositorio del workflow DEPLOY - UAT
+      # - name: Download repository archive from DEPLOY - UAT
+      #   uses: actions/download-artifact@v4
+      #   with:
+      #     name: repository-archive
+      #     github-token: ${{ secrets.GITHUB_TOKEN }}
+      #     run-id: ${{ github.event.workflow_run.id }}
 
-      # Extrae el archivo zip
-      - name: Extract repository archive
-        run: unzip -q repository-*.zip -d .
+      # # Extrae el archivo zip
+      # - name: Extract repository archive
+      #   run: unzip -q repository-*.zip -d .
 
       # Runs a single command using the runners shell
       - name: Run a one-line script
