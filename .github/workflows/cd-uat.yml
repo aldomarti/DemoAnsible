@@ -21,13 +21,13 @@ jobs:
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      # # Descarga el artefacto del workflow BUILD - DEV
-      # - name: Download artifact from BUILD - DEV
-      #   uses: actions/download-artifact@v4
-      #   with:
-      #     name: repository-archive
-      #     github-token: ${{ secrets.GITHUB_TOKEN }}
-      #     run-id: ${{ github.event.workflow_run.id }}
+      # Descarga el artefacto del workflow BUILD - DEV
+      - name: Download artifact from BUILD - DEV
+        uses: actions/download-artifact@v4
+        with:
+          name: repository-archive
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          run-id: ${{ github.event.workflow_run.id }}
 
       # Lee la versión desde el archivo
       - name: Read version
