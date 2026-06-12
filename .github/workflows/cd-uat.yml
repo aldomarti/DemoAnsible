@@ -48,6 +48,14 @@ jobs:
           path: version.txt
           retention-days: 30
 
+      # Re-sube el archivo repository-archive para el siguiente pipeline
+      - name: Re-upload repository archive
+        uses: actions/upload-artifact@v4
+        with:
+          name: repository-archive
+          path: repository-${{ env.VERSION }}.zip
+          retention-days: 30
+
       # Runs a single command using the runners shell
       - name: Run a one-line script
         run: echo Deploying version ${{ env.VERSION }} to UAT

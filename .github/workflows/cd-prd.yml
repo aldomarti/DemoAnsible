@@ -22,10 +22,10 @@ jobs:
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       # Descarga el archivo de versión del workflow DEPLOY - UAT
-      - name: Download version artifact
+      - name: Download version artifact from DEPLOY - UAT
         uses: actions/download-artifact@v4
         with:
-          name: repository-archive
+          name: version-artifact
           github-token: ${{ secrets.GITHUB_TOKEN }}
           run-id: ${{ github.event.workflow_run.id }}
 
@@ -35,8 +35,8 @@ jobs:
           VERSION=$(cat version.txt)
           echo "VERSION=$VERSION" >> $GITHUB_ENV
 
-      # Descarga el artefacto del workflow DEPLOY - UAT
-      - name: Download artifact from DEPLOY - UAT
+      # Descarga el artefacto del repositorio del workflow DEPLOY - UAT
+      - name: Download repository archive from DEPLOY - UAT
         uses: actions/download-artifact@v4
         with:
           name: repository-archive
