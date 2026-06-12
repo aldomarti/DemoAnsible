@@ -29,11 +29,12 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           run-id: ${{ github.event.workflow_run.id }}
 
-      # Lee la versión desde el archivo
-      - name: Read version
+      # Extrae el nombre del archivo zip para obtener la versión
+      - name: Extract version from artifact
         run: |
-          VERSION=$(cat version.txt)
+          VERSION=$(ls repository-*.zip | sed 's/repository-//;s/.zip//')
           echo "VERSION=$VERSION" >> $GITHUB_ENV
+          echo "$VERSION" > version.txt
 
       # # Extrae el archivo zip
       # - name: Extract repository archive
@@ -45,14 +46,6 @@ jobs:
         with:
           name: version-artifact
           path: version.txt
-          retention-days: 30
-
-      # Re-sube el archivo repository-archive para el siguiente pipeline
-      - name: Re-upload repository archive
-        uses: actions/upload-artifact@v4
-        with:
-          name: repository-archive
-          path: repository-${{ env.VERSION }}.zip
           retention-days: 30
 
       # Runs a single command using the runners shell
